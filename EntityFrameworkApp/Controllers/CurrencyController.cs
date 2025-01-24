@@ -86,6 +86,14 @@ namespace EntityFrameworkApp.Controllers
             return Ok(result);
         }
 
+        [HttpPost("All")]
+        public async Task<IActionResult> GetCurrenciessByIds([FromBody] List<int> ids)
+        {
+            var result = await _context.Currency.Where(x => ids.Contains(x.Id)).ToListAsync();
+
+            return Ok(result);
+
+        }
 
     }
 }

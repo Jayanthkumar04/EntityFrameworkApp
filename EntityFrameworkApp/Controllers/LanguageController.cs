@@ -63,6 +63,15 @@ namespace EntityFrameworkApp.Controllers
             return Ok(result);
         }
 
+        [HttpPost("All")]
+        public async Task<IActionResult> GetLanguagesByIds([FromBody] List<int> ids)
+        {
+            var result = await _context.Languages.Where(x => ids.Contains(x.Id)).ToListAsync();
+
+            return Ok(result);
+
+        }
+
 
     }
 }
