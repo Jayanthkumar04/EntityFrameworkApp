@@ -95,5 +95,19 @@ namespace EntityFrameworkApp.Controllers
 
         }
 
+        [HttpGet("GettingRecords")]
+        public async Task<IActionResult> GetAllCurrencies()
+        {
+            var result = await _context.Currency
+                         .Select(x => new Currency
+                         {
+                             Id = x.Id,
+                             Title = x.Title,
+                         }).ToListAsync();
+
+            return Ok(result);
+        }
+
+
     }
 }

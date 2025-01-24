@@ -72,6 +72,19 @@ namespace EntityFrameworkApp.Controllers
 
         }
 
+        [HttpGet("GettingLanguagesAgain")]
+        public async Task<IActionResult> GetAllLanguagesAgain()
+        {
+            var result = await _context.Languages
+                           .Select(x => new
+                           {
+                               Id = x.Id,
+                               Title = x.Title,
+                           }).ToListAsync();
+
+            return Ok(result);
+        }
+
 
     }
 }
