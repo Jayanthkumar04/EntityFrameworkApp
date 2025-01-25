@@ -36,5 +36,6 @@ namespace EntityFrameworkApp.Data
 
         public DbSet<Currency> Currency { get; set; }
 
+        public DbSet<Author> Authors { get; set; }
     }
 }
