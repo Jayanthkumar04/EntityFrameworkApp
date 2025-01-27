@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250123071414_tables added and Master data added")]
-    partial class tablesaddedandMasterdataadded
+    [Migration("20250127135517_reinstalling db")]
+    partial class reinstallingdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,27 @@ namespace EntityFrameworkApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("EntityFrameworkApp.Model.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("EntityFrameworkApp.Model.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +53,9 @@ namespace EntityFrameworkApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly>("CreatedOn")
                         .HasColumnType("date");
@@ -54,6 +78,8 @@ namespace EntityFrameworkApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("LanguageId");
 
@@ -182,11 +208,17 @@ namespace EntityFrameworkApp.Migrations
 
             modelBuilder.Entity("EntityFrameworkApp.Model.Book", b =>
                 {
+                    b.HasOne("EntityFrameworkApp.Model.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("EntityFrameworkApp.Model.Language", "Language")
                         .WithMany("Books")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
 
                     b.Navigation("Language");
                 });

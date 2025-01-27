@@ -1,8 +1,11 @@
 using EntityFrameworkApp.Data;
+using EntityFrameworkApp.Interfaces;
+using EntityFrameworkApp.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers();
