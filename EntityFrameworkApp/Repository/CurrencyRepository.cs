@@ -9,9 +9,9 @@ namespace EntityFrameworkApp.Repository
     {
         public async Task<Currency> AddCurrency(Currency currency)
         {
-             _context.Add(currency);
+            var result = await _context.AddAsync(currency);
 
-            var result = _context.SaveChanges();
+           _context.SaveChanges();
 
             return currency;
         }

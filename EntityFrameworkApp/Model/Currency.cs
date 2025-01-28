@@ -7,7 +7,7 @@
     
         public string Description { get; set; }
 
-        public ICollection<BookPrice> BookPrices { get; set; }
+        public ICollection<BookPrice>? BookPrices { get; set; }
 
     }
 }

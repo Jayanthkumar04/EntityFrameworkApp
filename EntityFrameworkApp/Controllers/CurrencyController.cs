@@ -19,6 +19,14 @@ namespace EntityFrameworkApp.Controllers
             
         }
 
+        [HttpPost("AddCurrency")]
+        public async Task<IActionResult> AddCurrency([FromBody] Currency currency)
+        {
+            var CurrAdd = _repo.AddCurrency(currency);
+
+            return Ok(currency);
+        }
+
         //[HttpGet("")]
         //public IActionResult GetAllCurrencies()
         //{
@@ -116,6 +124,18 @@ namespace EntityFrameworkApp.Controllers
             return Ok(result);
         }
         */
+
+        [HttpPut("edit{id}")]
+
+
+        public async Task<IActionResult> EditCurrency([FromRoute] int id ,[FromBody] Currency currency)
+        {
+            var result = await _repo.EditCurrency(id,currency);
+
+            return Ok(result);
+
+        }
+
 
     }
 }
