@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250127135517_reinstalling db")]
-    partial class reinstallingdb
+    [Migration("20250203055607_adding updated database2")]
+    partial class addingupdateddatabase2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,13 +94,13 @@ namespace EntityFrameworkApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Amount")
+                    b.Property<int?>("Amount")
                         .HasColumnType("int");
 
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CurrencyId")
+                    b.Property<int?>("CurrencyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -226,20 +226,23 @@ namespace EntityFrameworkApp.Migrations
             modelBuilder.Entity("EntityFrameworkApp.Model.BookPrice", b =>
                 {
                     b.HasOne("EntityFrameworkApp.Model.Book", "Book")
-                        .WithMany()
+                        .WithMany("BookPrices")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EntityFrameworkApp.Model.Currency", "Currency")
                         .WithMany("BookPrices")
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CurrencyId");
 
                     b.Navigation("Book");
 
                     b.Navigation("Currency");
+                });
+
+            modelBuilder.Entity("EntityFrameworkApp.Model.Book", b =>
+                {
+                    b.Navigation("BookPrices");
                 });
 
             modelBuilder.Entity("EntityFrameworkApp.Model.Currency", b =>

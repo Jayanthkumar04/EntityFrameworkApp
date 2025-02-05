@@ -20,11 +20,13 @@ namespace EntityFrameworkApp.Controllers
         }
 
         [HttpPost("AddCurrency")]
+        [ProducesResponseType(200,Type=typeof(Currency))]
+        [ProducesResponseType(201)]
         public async Task<IActionResult> AddCurrency([FromBody] Currency currency)
         {
             var CurrAdd = _repo.AddCurrency(currency);
 
-            return Ok(currency);
+            return Created();
         }
 
         //[HttpGet("")]
@@ -58,24 +60,32 @@ namespace EntityFrameworkApp.Controllers
         //}
 
         [HttpGet("")]
+        [ProducesResponseType(200,Type=typeof(Currency))]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> GetAllCurrency()
         {
 
             //var result = await (from currency in _context.Currency select currency).ToListAsync();
 
             var result = await _repo.GetAllCurrency();
-
-            return Ok(result);
+            if (result != null)
+                return Ok(result);
+            else
+                return NoContent();
 
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(200,Type=typeof(Currency))]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> GetCurrencyById([FromRoute] int id)
         {
             //var result = await _context.Currency.FindAsync(id);
             var result = await _repo.GetCurrencyById(id);
-
-            return Ok(result);
+            if (result != null)
+                return Ok(result);
+            else
+                return NoContent();
         }
 
         //[HttpGet("{name}")]
@@ -90,6 +100,8 @@ namespace EntityFrameworkApp.Controllers
         
 
         [HttpGet("{name}")]
+        [ProducesResponseType(200,Type=typeof(Currency))]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> GetCurrencyByName([FromRoute] string name, [FromQuery] string? description)
         {
             //var result = await _context.Currency.FirstOrDefaultAsync(x => x.Title == name
@@ -97,16 +109,21 @@ namespace EntityFrameworkApp.Controllers
             //                                                         (string.IsNullOrEmpty(description) || x.Description == description)        
 
             var result = await _repo.GetCurrencyByName(name, description);
-
-            return Ok(result);
+            if (result != null)
+                return Ok(result);
+            else return NoContent();
         }
 
         [HttpPost("All")]
+        [ProducesResponseType(200, Type = typeof(Currency))]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> GetAllCurrencyByIds([FromBody] List<int> ids)
         {
             var result = await _repo.GetAllCurrencyByIds(ids);
+            if (result != null)
+                return Ok(result);
 
-            return Ok(result);
+            else return NoContent();
 
         }
 

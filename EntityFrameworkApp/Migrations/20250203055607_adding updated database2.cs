@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EntityFrameworkApp.Migrations
 {
     /// <inheritdoc />
-    public partial class reinstallingdb : Migration
+    public partial class addingupdateddatabase2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,8 +92,8 @@ namespace EntityFrameworkApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    CurrencyId = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false)
+                    CurrencyId = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,8 +108,7 @@ namespace EntityFrameworkApp.Migrations
                         name: "FK_BookPrice_Currency_CurrencyId",
                         column: x => x.CurrencyId,
                         principalTable: "Currency",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(

@@ -1,7 +1,10 @@
-﻿namespace EntityFrameworkApp.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EntityFrameworkApp.Model
 {
     public class Currency
     {
+        [Key]
         public int Id { get; set; }
         public string Title { get; set; }
     

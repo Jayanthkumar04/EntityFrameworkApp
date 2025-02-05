@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+builder.Services.AddScoped<ILanguagesRepository, LanguageRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers();

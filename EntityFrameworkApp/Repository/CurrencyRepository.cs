@@ -32,7 +32,7 @@ namespace EntityFrameworkApp.Repository
         public async Task<ICollection<Currency>> GetAllCurrency()
         {
 
-            var result = await _context.Currency.ToListAsync();
+            var result = await _context.Currency.AsNoTracking().ToListAsync();
 
 
             return result;
@@ -40,15 +40,16 @@ namespace EntityFrameworkApp.Repository
 
         public async Task<ICollection<Currency>> GetAllCurrencyByIds(List<int> ids)
         {
-            var result = await _context.Currency.Where(x => ids.Contains(x.Id)).ToListAsync();
+            var result = await _context.Currency.Where(x => ids.Contains(x.Id)).AsNoTracking().ToListAsync();
 
             return result;
         }
 
         public async Task<Currency> GetCurrencyById(int id)
         {
-            var result = await _context.Currency.FindAsync(id);
+            //var result = await _context.Currency.AsNoTracking().FindAsync(id);
 
+            var result = await _context.Currency.AsNoTracking().FirstOrDefaultAsync(c=>c.Id == id);
             return result;
         }
 
@@ -57,7 +58,7 @@ namespace EntityFrameworkApp.Repository
             var result = await _context.Currency.Where(x => x.Title == name
                                                      && (string.IsNullOrEmpty(description) || x.Description == description)
 
-                                                     ).ToListAsync();
+                                                     ).AsNoTracking().ToListAsync();
 
             return result;
         }
